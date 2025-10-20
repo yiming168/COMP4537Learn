@@ -11,7 +11,7 @@
   </head>
   <body>
     <div id="app">
-      <aside class="sidebar">
+      <aside class="sidebar" aria-hidden="true" aria-label="Navigation">
         <div class="brand">
           <span class="logo">📚</span>
           <span class="title">Study Notes</span>
@@ -24,6 +24,7 @@
       </aside>
       <main class="content">
         <header class="topbar">
+          <button id="menu-button" class="menu-button" aria-label="Open navigation" aria-controls="nav">☰ Menu</button>
           <div id="breadcrumb" class="breadcrumb"></div>
           <div class="topbar-actions">
             <button id="copy-link" title="Copy current link">Copy Link</button>
@@ -33,6 +34,7 @@
           <p>Loading…</p>
         </article>
       </main>
+      <div id="sidebar-mask" class="sidebar-mask" hidden></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -40,4 +42,3 @@
     <script src="site/app.js" type="module"></script>
   </body>
   </html>
-

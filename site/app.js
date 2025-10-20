@@ -7,6 +7,8 @@ const searchEl = $("#search");
 const breadcrumbEl = $("#breadcrumb");
 const copyLinkBtn = $("#copy-link");
 const toggleThemeBtn = $("#toggle-theme");
+const menuBtn = $("#menu-button");
+const maskEl = $("#sidebar-mask");
 
 const state = {
   config: null,
@@ -29,6 +31,19 @@ function pathToHash(path) { return "#/" + encodeURI(path); }
 function hashToPath(hash) {
   if (!hash || !hash.startsWith("#/")) return null;
   return decodeURI(hash.slice(2));
+}
+
+function openNav() {
+  document.body.classList.add('nav-open');
+  const sidebar = document.querySelector('.sidebar');
+  if (sidebar) sidebar.setAttribute('aria-hidden', 'false');
+  if (maskEl) maskEl.hidden = false;
+}
+function closeNav() {
+  document.body.classList.remove('nav-open');
+  const sidebar = document.querySelector('.sidebar');
+  if (sidebar) sidebar.setAttribute('aria-hidden', 'true');
+  if (maskEl) maskEl.hidden = true;
 }
 
 async function loadConfig() {
@@ -102,6 +117,7 @@ async function loadDoc(path) {
     await renderMarkdown(md);
     const wanted = pathToHash(path);
     if (location.hash !== wanted) history.replaceState(null, "", wanted);
+    closeNav();
   } catch (e) {
     docEl.innerHTML = `<p style="color:#d33">Failed to load document: ${path}<br>${String(e)}</p>`;
   }
@@ -113,8 +129,7 @@ function onHashChange() {
   const p = hashToPath(location.hash);
   const valid = state.flat.some(it => it.path === p);
   if (p && valid) { loadDoc(p); return; }
-  const first = state.flat[0];
-  if (first) loadDoc(first.path);
+  renderHome();
 }
 
 function setupSearch() {
@@ -150,12 +165,32 @@ function setupTheme() {
   });
 }
 
+function renderHome() {
+  breadcrumbEl.textContent = '';
+  const sections = state.config?.sections || [];
+  const makeCard = (title, path) => `<a class="home-card" href="${pathToHash(path)}">${title}</a>`;
+  const cards = sections.map(sec => {
+    const first = (sec.items && sec.items[0]) ? sec.items[0].path : null;
+    if (!first) return '';
+    return makeCard(sec.name, first);
+  }).join('\n');
+  docEl.innerHTML = `<div class="home"><h1>Study Notes</h1><div class="home-grid">${cards}</div></div>`;
+}
+
 async function main() {
   setupTheme();
   setupSearch();
   setupCopyLink();
   await loadConfig();
   buildNav();
+  if (menuBtn) {
+    menuBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const open = document.body.classList.contains('nav-open');
+      if (open) closeNav(); else openNav();
+    });
+  }
+  if (maskEl) maskEl.addEventListener('click', closeNav);
   window.addEventListener("hashchange", onHashChange);
   onHashChange();
 }
@@ -163,4 +198,3 @@ async function main() {
 main().catch(err => {
   docEl.innerHTML = `<p style="color:#d33">Initialization failed: ${String(err)}</p>`;
 });
-

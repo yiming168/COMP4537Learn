@@ -1,5 +1,7 @@
 
 
+> Acknowledgement: This page was authored by Carol. Many thanks for her contribution.
+
 ### **Part 1: The Foundation - Asynchronous JavaScript and XML (AJAX)**
 
 AJAX allows a web page to communicate with a server in the background without reloading. This is achieved using the `XMLHttpRequest` (XHR) object.
@@ -223,6 +225,4 @@ const server = http.createServer(function(req, res) {
 
 ---
 
-## Acknowledgement
-
-This page was authored by Carol. Many thanks for her contribution.
+ 
