@@ -22,9 +22,9 @@ body { background: var(--bg); color: var(--fg); font: 14px/1.6 system-ui, -apple
 
 #app { display: grid; grid-template-columns: 1fr; min-height: 100vh; }
 
-.sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 12px; display: flex; flex-direction: column; gap: 12px; transform: translateX(-100%); transition: transform .2s ease; z-index: 1000; }
+.sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 12px; display: flex; flex-direction: column; gap: 12px; transform: translateX(-100%); transition: transform .2s ease; z-index: 1000; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .nav-open .sidebar { transform: translateX(0); }
-.sidebar-mask { position: fixed; inset: 0; background: rgba(0,0,0,.2); z-index: 900; }
+.sidebar-mask { position: fixed; inset: 0; background: rgba(0,0,0,.2); z-index: 900; touch-action: none; }
 .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
 .logo { font-size: 18px; }
 
@@ -55,3 +55,6 @@ body { background: var(--bg); color: var(--fg); font: 14px/1.6 system-ui, -apple
 .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .home-card { display: block; padding: 16px; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--fg); background: var(--sidebar-bg); }
 .home-card:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Prevent background scroll when drawer open */
+body.nav-open { overflow: hidden; overscroll-behavior: none; }
