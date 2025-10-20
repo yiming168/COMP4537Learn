@@ -1,0 +1,84 @@
+Collecting your personal software knowledge notes in one place ( e.g. a word/google  doc file)
+(Draft 1 subject to change) 
+The purpose of this assignment is to encourage you to take notes as you learn and make it even into a book.
+Milestone 1 : Demo what you did so far. It has to be about at least 35 out of 50 topics below 
+Objective
+Create a book that captures everything you’ve learned about web computing—daily notes, tips, code snippets, figures, or reflections that connect across disciplines (e.g., linking JavaScript’s single-thread model to OS concepts). This is your canvas: combine your technical understanding with creativity, humor, or artistic flair.
+
+Audience
+Write for a fellow student with only basic knowledge of HTML, CSS, and JavaScript.
+
+Format
+Any form is acceptable—PDF, interactive web content, scrollable or unconventional layouts, even an AI agent trained on your entries., no limit. What matters is that the content is your own work. Any color, any shape, any form, use your innovation.
+
+AI Use
+AI tools may be used only for proofreading, grammar, layout, or image generation—not for generating text content or code. Violations will result in a grade of zero.
+
+Area of Expertise Ideas
+Your book may include diary notes or focus on themes such as:
+
+AI-powered security attacks
+Web security vulnerabilities
+Microservices “from zero to hero”
+From JavaScript to AI-powered drone control
+Web Computing  for Games
+How I failed a web course yet I landed a software job at amazon :D
+..
+And can include
+
+Interview tips
+JS hoisting
+Closure
+Asynchronous programming
+Memory leak
+Classes in JS
+Web application architectural patterns
+Monolithic Architecture
+Layered (n-Tier) Architecture
+Microservices Architecture
+Event-Driven Architecture
+Serverless / Function-as-a-Service (FaaS)
+Model-View-Controller (MVC)
+Model-View-ViewModel (MVVM)
+Micro-Frontends
+Hexagonal Architecture (Ports & Adapters)
+Command Query Responsibility Segregation (CQRS)
+Tips on hosting pretrained AI models
+Promises, await, and async
+Fetch
+Defer
+Execution stack
+Public-key/private-key
+Content delivery network (CDN)
+Single sign-on
+Web push notifications
+HTML5 Canvas
+Cookies
+Session, JWT, httpOnly
+Local storage
+Web workers
+Injection attacks
+Web security best practices
+Encryption
+Hashing
+RDBMS
+CRUD
+1:M
+M:M
+1NF
+2NF
+API-centric architectures
+Quick review of HTML/CSS/JavaScript
+ECMA 6 JavaScript, arrow functions, strict mode, ...
+Single threaded JS
+Hosting LLM models
+Choosing and maintaining hosting services
+Ajax calls in depth 
+Creating secure RESTful APIs
+SSL public key/private key
+GET vs POST
+oAuth and  bearer token
+
+OpenAI's GPT-3.5 was used to proofread this assignment 
+
+Due on Oct 26, 2025 11:59 PM

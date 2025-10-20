@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Study Notes</title>
+    <meta name="description" content="Web Diary and LLM hosting notes" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/github.min.css">
+    <link rel="stylesheet" href="site/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="logo">📚</span>
+          <span class="title">Study Notes</span>
+        </div>
+        <input id="search" class="search" type="search" placeholder="Search docs…" aria-label="Search documentation" />
+        <nav id="nav" class="nav" aria-label="Documentation navigation"></nav>
+        <footer class="sidebar-footer">
+          <a href="#" id="toggle-theme" title="Toggle theme">🌙/☀️</a>
+        </footer>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div id="breadcrumb" class="breadcrumb"></div>
+          <div class="topbar-actions">
+            <button id="copy-link" title="Copy current link">Copy Link</button>
+          </div>
+        </header>
+        <article id="doc" class="doc">
+          <p>Loading…</p>
+        </article>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+    <script src="site/app.js" type="module"></script>
+  </body>
+  </html>
+

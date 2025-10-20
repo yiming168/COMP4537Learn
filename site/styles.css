@@ -1,0 +1,54 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #6a737d;
+  --border: #e1e4e8;
+  --accent: #0969da;
+  --sidebar-bg: #f6f8fa;
+}
+
+html[data-theme="dark"] {
+  --bg: #0d1117;
+  --fg: #c9d1d9;
+  --muted: #8b949e;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --sidebar-bg: #161b22;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 14px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+
+#app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+
+.sidebar { background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+.logo { font-size: 18px; }
+
+.search { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.nav { flex: 1; overflow: auto; }
+.section { margin: 12px 0; }
+.section-title { font-size: 12px; color: var(--muted); margin: 10px 4px; text-transform: uppercase; letter-spacing: .04em; }
+.link { display: block; padding: 6px 8px; border-radius: 6px; color: inherit; text-decoration: none; }
+.link:hover { background: rgba(148,163,184,.15); }
+.link.active { background: rgba(9,105,218,.15); color: var(--accent); font-weight: 600; }
+
+.sidebar-footer { border-top: 1px solid var(--border); padding-top: 8px; display: flex; gap: 8px; justify-content: space-between; align-items: center; }
+.sidebar-footer a { color: var(--muted); text-decoration: none; }
+
+.content { min-width: 0; display: flex; flex-direction: column; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 1; }
+.breadcrumb { color: var(--muted); font-size: 12px; }
+.doc { padding: 16px 24px; max-width: 1080px; }
+.doc :is(h1,h2,h3,h4) { border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.doc pre code { display: block; padding: 12px; border-radius: 8px; overflow: auto; }
+.doc code:not(pre code) { background: rgba(148,163,184,.15); padding: 2px 6px; border-radius: 4px; }
+
+@media (max-width: 880px) {
+  #app { grid-template-columns: 1fr; }
+  .sidebar { position: sticky; top: 0; z-index: 2; }
+}
+

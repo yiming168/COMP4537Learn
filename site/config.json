@@ -1,0 +1,24 @@
+{
+  "title": "Study Notes",
+  "sections": [
+    {
+      "name": "Web Diary",
+      "items": [
+        { "title": "Web Computing Diary Book", "path": "webDiary/WEB_DIARY_BOOK.md" },
+        { "title": "AJAX / API / CORS", "path": "webDiary/ajax_APIcalls_CORS.md" },
+        { "title": "JavaScript Async Programming", "path": "webDiary/js async programming.md" },
+        { "title": "JavaScript Q&A", "path": "webDiary/javascript_questions_and_answers.md" }
+      ]
+    },
+    {
+      "name": "LLM Host & Maintenance",
+      "items": [
+        { "title": "Mac mini + Qwen7B Deployment", "path": "LLMSetup/macmini_ollama_qwen7b_setup.md" },
+        { "title": "Ollama Mac Setup", "path": "LLMSetup/ollama_mac_setup.md" },
+        { "title": "Ollama API Connectivity", "path": "LLMSetup/ollama_connect.md" },
+        { "title": "Secrets and Key Management", "path": "LLMSetup/secret_concern.md" }
+      ]
+    }
+  ]
+}
+
