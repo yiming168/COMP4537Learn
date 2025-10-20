@@ -220,3 +220,9 @@ const server = http.createServer(function(req, res) {
     *   Tools like Postman and `curl` are simple HTTP clients, not web browsers. They **do not enforce the Same-Origin Policy**. They will show you whatever response the server sends. A CORS error is a browser-specific security feature.
 *   **Is CORS for "secure communication"?**
     *   No, this is misleading. **HTTPS (SSL/TLS)** provides secure, encrypted communication. **CORS** is an **authorization policy** that tells a browser which external websites are permitted to *read* a response.
+
+---
+
+## Acknowledgement
+
+This page was authored by Carol. Many thanks for her contribution.

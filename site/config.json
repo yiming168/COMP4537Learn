@@ -6,8 +6,7 @@
       "items": [
         { "title": "Web Computing Diary Book", "path": "webDiary/WEB_DIARY_BOOK.md" },
         { "title": "AJAX / API / CORS", "path": "webDiary/ajax_APIcalls_CORS.md" },
-        { "title": "JavaScript Async Programming", "path": "webDiary/js async programming.md" },
-        { "title": "JavaScript Q&A", "path": "webDiary/javascript_questions_and_answers.md" }
+        { "title": "JavaScript Async Programming", "path": "webDiary/js async programming.md" }
       ]
     },
     {
