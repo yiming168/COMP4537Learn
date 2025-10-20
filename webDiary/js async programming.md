@@ -1,6 +1,8 @@
 
 # JavaScript Asynchronous Programming and Core Concepts
 
+> Acknowledgement: This page was authored by Carol. Many thanks for her contribution.
+
 
 ## 1. Functions Returning Objects (The Factory Pattern)
 
