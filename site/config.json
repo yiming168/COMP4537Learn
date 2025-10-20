@@ -18,7 +18,20 @@
         { "title": "Ollama API Connectivity", "path": "LLMSetup/ollama_connect.md" },
         { "title": "Secrets and Key Management", "path": "LLMSetup/secret_concern.md" }
       ]
+    },
+    {
+      "name": "Quizzes",
+      "items": [
+        { "title": "Quiz 1", "path": "quizzes/quiz1.md" },
+        { "title": "Quiz 2", "path": "quizzes/quiz2.md" },
+        { "title": "Quiz 3", "path": "quizzes/quiz3.md" },
+        { "title": "Quiz 4", "path": "quizzes/quiz4.md" },
+        { "title": "Quiz 5", "path": "quizzes/quiz5.md" },
+        { "title": "Quiz 6", "path": "quizzes/quiz6.md" },
+        { "title": "Quiz 7", "path": "quizzes/quiz7.md" },
+        { "title": "Quiz 8", "path": "quizzes/quiz8.md" },
+        { "title": "Quiz 9", "path": "quizzes/quiz9.md" }
+      ]
     }
   ]
 }
-
