@@ -341,6 +341,14 @@ Notes below are reorganized from your class notes. Headings are for navigation; 
 - Some things can only be done by POST because POST has no limit on data payload; GET has a limit (something below 1 MB)
 - Neither GET nor POST is inherently “more secure”
 
+- PUT and idempotency:
+  - Idempotent means repeating the same request leaves the resource state unchanged beyond the first application.
+  - PUT replaces the resource at the target URI with the sent representation; repeating the same PUT doesn’t create duplicates or additional changes.
+  - Safe to retry: clients can retry a failed/suspect PUT without extra side effects.
+  - Not “safe”: the first PUT modifies state. GET is safe; PUT is not, but it is idempotent.
+  - Contrast: POST is not idempotent; repeating POST may create multiple resources or repeat actions.
+  - Nuance: responses can differ (e.g., first 201 Created, later 200/204). PATCH may or may not be idempotent depending on the operation.
+
 ### 13. Content-Type
 - Content-Type: "text/html"
 
@@ -368,6 +376,44 @@ async function fetchJSON(url) {
 }
 ```
 
+Note — Microtasks vs setTimeout
+- `.then/.catch/.finally` callbacks run in the microtask queue.
+- `setTimeout(fn, 0)` runs in the macrotask (task) queue.
+- Microtasks run before the next macrotask, so `.then` runs before `setTimeout(…,0)`.
+
+```js
+console.log('A');
+Promise.resolve().then(() => console.log('microtask'));
+setTimeout(() => console.log('macrotask'), 0);
+console.log('B');
+// Order: A, B, microtask, macrotask
+```
+
+Note — Promise.resolve return value and timing
+- `Promise.resolve(10)` returns a Promise already fulfilled with value `10` (not the number itself).
+- Access the value via `.then(...)` or `await`.
+- Handlers run on the microtask queue, after current synchronous code.
+- Identity/flattening: if you pass a Promise, it returns the same Promise; thenables are assimilated.
+
+```js
+const p = Promise.resolve(10);
+p.then(v => console.log('resolved to:', v)); // 10 (async)
+console.log('sync first');                    // prints before the then above
+
+const existing = Promise.resolve('x');
+console.log('same reference:', Promise.resolve(existing) === existing); // true
+
+// Thenable assimilation
+Promise.resolve({ then(r){ r(99); } })
+  .then(v => console.log('thenable:', v)); // 99
+
+// Using await
+(async () => {
+  const v = await Promise.resolve(10);
+  console.log('await value:', v); // 10
+})();
+```
+
 ### 17. Promises: States and Flow
 - A promise has 3 statuses: pending, fulfilled, rejected
 - Fulfilled and rejected are mutually exclusive; both are settled statuses
@@ -378,8 +424,29 @@ async function fetchJSON(url) {
 - .then after the function call to handle return
 - await to wait for response (modern)
 - .catch → .catch(handleError) is the same as .then(null, handleError)
-- .finally
-- What does Promise.resolve() do? It resolves a promise
+ - .finally
+ - Promise.resolve (static):
+   - Static method on the Promise constructor (not on instances).
+   - Normalizes any value/thenable into a Promise and flattens nested Promises.
+   - Different from the executor’s `resolve` parameter in `new Promise((resolve, reject) => ...)`.
+   - Great for starting a chain: `Promise.resolve(x).then(...)`.
+   - Equivalent but heavier: `new Promise(r => r(x))`.
+   - Quick checks: `typeof Promise.resolve === 'function'`; there is no `p.resolve` on a promise instance.
+
+```js
+// Promise.resolve examples (normalize & flatten)
+Promise.resolve(42).then(v => console.log('value:', v));                        // 42
+Promise.resolve(Promise.resolve(5)).then(v => console.log('flattened:', v));    // 5
+
+// Start a chain from a value
+Promise.resolve(10)
+  .then(v => v * 2)
+  .then(v => v + 1)
+  .then(v => console.log('chain:', v));                                         // 21
+
+// Equivalent but heavier than Promise.resolve
+new Promise(r => r(7)).then(v => console.log('new Promise:', v));               // 7
+```
 
 ### 19. Event Loop and Queue
 - There is a queue involved with async functions
