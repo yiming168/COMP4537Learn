@@ -50,6 +50,51 @@ body { background: var(--bg); color: var(--fg); font: 14px/1.6 system-ui, -apple
 .doc pre code { display: block; padding: 12px; border-radius: 8px; overflow: auto; }
 .doc code:not(pre code) { background: rgba(148,163,184,.15); padding: 2px 6px; border-radius: 4px; }
 
+details.note-group {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 16px 0;
+  padding: 0 14px 12px;
+  background: var(--sidebar-bg);
+  background: color-mix(in srgb, var(--sidebar-bg) 80%, transparent);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+details.note-group[open] {
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+details.note-group > summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  padding: 14px 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+details.note-group > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+details.note-group > summary::-webkit-details-marker { display: none; }
+details.note-group > summary::before {
+  content: "▸";
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform .2s ease;
+  color: var(--accent);
+}
+details.note-group[open] > summary::before {
+  transform: rotate(90deg);
+}
+details.note-group ul,
+details.note-group ol {
+  margin-top: 0;
+}
+
 /* Home cards */
 .home { padding: 24px; }
 .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
