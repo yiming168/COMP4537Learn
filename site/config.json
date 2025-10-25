@@ -6,7 +6,8 @@
       "items": [
         { "title": "Web Computing Diary Book", "path": "webDiary/WEB_DIARY_BOOK.md" },
         { "title": "AJAX / API / CORS", "path": "webDiary/ajax_APIcalls_CORS.md" },
-        { "title": "JavaScript Async Programming", "path": "webDiary/js async programming.md" }
+        { "title": "JavaScript Async Programming", "path": "webDiary/js async programming.md" },
+        { "title": "n8n + Ollama + Drive: Auto Articles", "path": "webDiary/n8n_setup_ollama_google_drive.md" }
       ]
     },
     {

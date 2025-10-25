@@ -588,7 +588,7 @@ new Promise(r => r(7)).then(v => console.log('new Promise:', v));               
 
 <details class="topic">
 <summary>31. Term Project Ideas</summary>
-- Can AI agents make phone calls on your behalf using your voice? (feasibility question)
+- Create a crossword puzzle game, use AI to give the hints.
 - Term project → API service
 
 </details>
