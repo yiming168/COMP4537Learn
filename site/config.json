@@ -16,7 +16,8 @@
         { "title": "Mac mini + Qwen7B Deployment", "path": "LLMSetup/macmini_ollama_qwen7b_setup.md" },
         { "title": "Ollama Mac Setup", "path": "LLMSetup/ollama_mac_setup.md" },
         { "title": "Ollama API Connectivity", "path": "LLMSetup/ollama_connect.md" },
-        { "title": "Secrets and Key Management", "path": "LLMSetup/secret_concern.md" }
+        { "title": "Secrets and Key Management", "path": "LLMSetup/secret_concern.md" },
+        { "title": "Power-Loss Recovery Checklist", "path": "LLMSetup/ollama_power_restart_checklist.md" }
       ]
     },
     {
