@@ -622,35 +622,20 @@ new Promise(r => r(7)).then(v => console.log('new Promise:', v));               
 ## Entries
 
 Write your entries below (diary-style or thematic). Use any structure you like. A suggested pattern is provided; feel free to change it.
-
-### Topic Title
-- Summary: <your words>
-- Key concepts: <bullets>
-- Example/snippet: <your own code>
-- Pitfalls/tips: <bullets>
-- Cross-links: <related topics>
-
-### Topic Title
-- Summary: <your words>
-- Key concepts: <bullets>
-- Example/snippet: <your own code>
-- Pitfalls/tips: <bullets>
-- Cross-links: <related topics>
-
 ---
 
 ## Hosted URLs
 
 - Main book URL (if hosted as a site): https://yiming168.github.io/COMP4537Learn/
-- Any related demos: <https://...>
 
 ---
 
 ## Work Log
 
 - <Oct. 18, 2025> — Set up scaffold and outline
-- <Date> — Added entries and figures
-- <Date> — Proofread and formatted
+- <Oct. 20, 2025> — Added ollama_qwen7b to learning site
+- <Oct. 23, 2025> — added n8n workflow to automatical write articles
+- <Oct. 25, 2025> — added an ollama power restart checklist when electricity resumed
 
 ---
 
