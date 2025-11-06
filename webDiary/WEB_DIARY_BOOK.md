@@ -91,9 +91,10 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 
 ## Class Notes (Transcribed)
 
-<details class="note-group" open>
+<details class="note-group">
 <summary>Week 1 &amp; 2 — Architecture foundations</summary>
 
+- Consolidated into Topics (Structured).
 - **Architecture**
   - Blueprints, plans, patterns, standards (easy for others to understand)
   - Think of maintenance, trade-offs, limitations (e.g., space)
@@ -124,6 +125,7 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 <details class="note-group">
 <summary>Week 3 — Web storage & review</summary>
 
+- Consolidated into Topics (Structured).
 - **Local storage**
   - Web storage → Local storage and Session storage
   - Web storages depend on the browser → max of ~10 MB across browsers
@@ -152,6 +154,7 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 <details class="note-group">
 <summary>Week 4 — APIs, hosting, and Node.js</summary>
 
+- Consolidated into Topics (Structured).
 - **API server traits**
   - RESTful
   - Low cost, simpler, more secure, robust
@@ -186,6 +189,7 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 <details class="note-group">
 <summary>Week 5 — Asynchronous programming focus</summary>
 
+- Consolidated into Topics (Structured).
 - **Async mindset**
   - Asynchronous programming → How long will it take? No one knows
   - Define timeouts → enforces predictability on unpredictable functions
@@ -217,6 +221,7 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 <details class="note-group">
 <summary>Week 6 — AJAX, CORS, and networking</summary>
 
+- Consolidated into Topics (Structured).
 - **Timeline**
   - October 8, 2025
 - **Sending data**
@@ -248,6 +253,7 @@ Use this diary to collect your web computing notes, tips, code snippets, figures
 <details class="note-group">
 <summary>Week 7 — Promises revisited</summary>
 
+- Consolidated into Topics (Structured).
 - **Timeline**
   - October 15, 2025
   - Important note: Milestone 1 of the project is now moved a week later! Yay
@@ -616,6 +622,32 @@ new Promise(r => r(7)).then(v => console.log('new Promise:', v));               
 <summary>35. Undefined vs Null</summary>
   - Undefined: variable defined without a value
   - Null: set to no valid value; bad practice to set something to undefined
+
+</details>
+
+<details class="topic">
+<summary>36. AI Goals and MCP</summary>
+- Learn how to fine-tune a model
+- Learn how to train a model
+- MCP
+
+</details>
+
+<details class="topic">
+<summary>37. Additional Notes (Weeks 1–7)</summary>
+- Web storage quota is browser-dependent (often around 10 MB).
+- Node.js modules: `require` imports a module’s exported functions.
+- Promise utilities: `Promise.all([...])` to run in parallel (fail-fast on first rejection).
+- Course logistics: Oct 15, 2025 timeline; Milestone 1 moved one week later.
+
+</details>
+
+<details class="topic">
+<summary>38. Career and Education Notes</summary>
+- Cracking coding interviews
+- AI for business: how to train a model
+- Security focus areas (from course notes)
+- Education: observations about the current system
 
 </details>
 
