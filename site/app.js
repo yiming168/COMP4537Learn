@@ -10,10 +10,16 @@ const toggleThemeBtn = $("#toggle-theme");
 const menuBtn = $("#menu-button");
 const maskEl = $("#sidebar-mask");
 
+// Optional: Google Drive integration for dynamic diary posts
+// Provide these via inline script in index.html
+const DRIVE_API_KEY = window.DRIVE_API_KEY || ""; // e.g., 'AIza...'
+const DRIVE_FOLDER_ID = window.DRIVE_FOLDER_ID || ""; // e.g., '1wDy_...'
+
 const state = {
   config: null,
   flat: [],
   activePath: null,
+  drive: { files: [], sectionName: "Drive Articles" },
 };
 
 function saveTheme(theme) {
@@ -107,6 +113,14 @@ async function renderMarkdown(md) {
 async function loadDoc(path) {
   state.activePath = path;
   setActiveLink(path);
+  // Drive-backed virtual paths use the scheme: drive:<fileId>
+  if (path && path.startsWith("drive:")) {
+    const fileId = path.slice("drive:".length);
+    const file = state.drive.files.find(f => f.id === fileId);
+    updateBreadcrumb({ section: state.drive.sectionName, title: file?.name || fileId });
+    await loadDriveFile(fileId, file?.name);
+    return;
+  }
   const item = state.flat.find(it => it.path === path);
   updateBreadcrumb(item);
   docEl.innerHTML = `<p>Loading: ${path}</p>`;
@@ -177,12 +191,75 @@ function renderHome() {
   docEl.innerHTML = `<div class="home"><h1>Study Notes</h1><div class="home-grid">${cards}</div></div>`;
 }
 
+// ----------------------
+// Google Drive integration
+// ----------------------
+async function loadDriveIndex() {
+  if (!DRIVE_API_KEY || !DRIVE_FOLDER_ID) return null;
+  const q = `'${DRIVE_FOLDER_ID}' in parents and trashed=false and name contains '.md'`;
+  const url = new URL('https://www.googleapis.com/drive/v3/files');
+  url.searchParams.set('key', DRIVE_API_KEY);
+  url.searchParams.set('q', q);
+  url.searchParams.set('orderBy', 'modifiedTime desc');
+  url.searchParams.set('pageSize', '50');
+  url.searchParams.set('fields', 'files(id,name,modifiedTime)');
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error('Drive list failed: ' + res.status);
+  const data = await res.json();
+  const files = (data.files || []).map(f => ({ id: f.id, name: f.name, modifiedTime: f.modifiedTime }));
+  state.drive.files = files;
+  return files;
+}
+
+async function loadDriveFile(fileId, displayName) {
+  if (!DRIVE_API_KEY) {
+    docEl.innerHTML = `<p style="color:#d33">Drive API key not configured.</p>`;
+    return;
+  }
+  docEl.innerHTML = `<p>Loading: ${displayName || fileId}</p>`;
+  const url = `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}?alt=media&key=${encodeURIComponent(DRIVE_API_KEY)}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Drive fetch failed: ' + res.status);
+    const md = await res.text();
+    await renderMarkdown(md);
+    const wanted = pathToHash(`drive:${fileId}`);
+    if (location.hash !== wanted) history.replaceState(null, '', wanted);
+    closeNav();
+  } catch (e) {
+    docEl.innerHTML = `<p style="color:#d33">Failed to load Drive file: ${displayName || fileId}<br>${String(e)}</p>`;
+  }
+}
+
+function injectDriveSectionIntoConfig() {
+  if (!state.drive.files.length) return;
+  const section = {
+    name: state.drive.sectionName,
+    items: state.drive.files.map(f => ({ title: f.name.replace(/\.[^./]+$/, ''), path: `drive:${f.id}` }))
+  };
+  // Append or replace existing Drive section
+  const existingIdx = state.config.sections.findIndex(s => s.name === state.drive.sectionName);
+  if (existingIdx >= 0) state.config.sections.splice(existingIdx, 1, section);
+  else state.config.sections.push(section);
+}
+
 async function main() {
   setupTheme();
   setupSearch();
   setupCopyLink();
   await loadConfig();
   buildNav();
+  // Optionally load Drive posts and append to the nav
+  try {
+    const files = await loadDriveIndex();
+    if (files && files.length) {
+      injectDriveSectionIntoConfig();
+      buildNav();
+    }
+  } catch (e) {
+    // Non-fatal; continue without Drive integration
+    console.warn('Drive integration skipped:', e);
+  }
   if (menuBtn) {
     menuBtn.addEventListener('click', (e) => {
       e.preventDefault();
