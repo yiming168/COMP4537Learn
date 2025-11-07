@@ -4,22 +4,9 @@ Student: Yiming Zhu
 
 Note: This file is a scaffold for my personal, student-authored diary/book. AI assistance is limited to layout, proofreading, and organization.
 
-## Table of Contents
-
-- About
-- Milestone Checklist (≥35 topics)
- - Topics (Structured)
-- Class Notes (Transcribed)
-- Entries
-- Hosted URLs
-- Work Log
-- Attribution
-
----
-
 ## About
 
-Use this diary to collect my web computing notes, tips, code snippets, figures, and reflections. Write for a peer with basic HTML/CSS/JS knowledge. Feel free to be creative with structure and visuals.
+This diary is used for collecting my web computing notes, tips, code snippets, figures, and reflections. It is written for a peer with basic HTML/CSS/JS knowledge. I can add different structure and visuals.
 
 ---
 
@@ -89,7 +76,7 @@ Use this diary to collect my web computing notes, tips, code snippets, figures, 
 
 ---
 
-## Class Notes (Transcribed)
+## Class Notes
 
 <details class="note-group">
 <summary>Week 1 &amp; 2 — Architecture foundations</summary>
@@ -284,7 +271,7 @@ Use this diary to collect my web computing notes, tips, code snippets, figures, 
 
 ## Topics (Structured)
 
-Notes below are reorganized from your class notes. Headings are for navigation; bullet points quote or lightly proofread your original wording.
+Notes below are reorganized from my class notes. Headings are for navigation; bullet points quote or lightly proofread my original wording.
 
 <details class="topic">
 <summary>1. Architecture Basics</summary>
