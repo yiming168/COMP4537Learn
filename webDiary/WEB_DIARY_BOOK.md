@@ -2,7 +2,7 @@
 
 Student: Yiming Zhu
 
-Note: This file is a scaffold for your personal, student-authored diary/book. AI assistance is limited to layout, proofreading, and organization.
+Note: This file is a scaffold for my personal, student-authored diary/book. AI assistance is limited to layout, proofreading, and organization.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ Note: This file is a scaffold for your personal, student-authored diary/book. AI
 
 ## About
 
-Use this diary to collect your web computing notes, tips, code snippets, figures, and reflections. Write for a peer with basic HTML/CSS/JS knowledge. Feel free to be creative with structure and visuals.
+Use this diary to collect my web computing notes, tips, code snippets, figures, and reflections. Write for a peer with basic HTML/CSS/JS knowledge. Feel free to be creative with structure and visuals.
 
 ---
 
@@ -809,11 +809,6 @@ git reset --hard origin/main
 
 </details>
 
-## Entries
-
-Write your entries below (diary-style or thematic). Use any structure you like. A suggested pattern is provided; feel free to change it.
----
-
 ## Hosted URLs
 
 - Main book URL (if hosted as a site): https://yiming168.github.io/COMP4537Learn/
@@ -830,6 +825,7 @@ Write your entries below (diary-style or thematic). Use any structure you like. 
 
 - <Nov. 06, 2025> - Fetched latest main: git fetch origin main --prune
 - <Nov. 06, 2025> - Discarded local changes: git reset --hard origin/main
+- <Nov. 07, 2025> — Added JWT learning content page (no implementation). See: Web Diary → JWT Explained.
 
 ---
 
