@@ -269,6 +269,146 @@ This diary is used for collecting my web computing notes, tips, code snippets, f
 
 ---
 
+<details class="note-group">
+<summary>Week 10 — SQL Queries (with Explanations)</summary>
+
+Assumptions: typical schema like Customers(CustomerID, CustomerName, Country), Orders(OrderID, CustomerID), OrderDetails(OrderID, ProductID), Products(ProductID, ProductName, Price). Use single quotes for string literals in most SQL dialects.
+
+```sql
+-- Count distinct countries (via subquery)
+SELECT COUNT(*)
+FROM (SELECT DISTINCT Country FROM Customers);
+```
+- Counts how many unique Country values exist.
+
+```sql
+-- All customers in Canada
+SELECT *
+FROM Customers
+WHERE Country = 'Canada';
+```
+- Filters rows where Country equals Canada.
+
+```sql
+-- Customers in a list of countries
+SELECT *
+FROM Customers
+WHERE Country IN ('Canada', 'US', 'UK', 'Germany');
+```
+- Uses `IN (...)` to match any of several values. Each value must be quoted separately.
+
+```sql
+-- Customers per country
+SELECT Country, COUNT(*)
+FROM Customers
+GROUP BY Country;
+```
+- Aggregates rows by Country and counts rows in each group.
+
+```sql
+-- Products priced above the average price
+SELECT *
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products);
+```
+- Correlates each product against the overall average price (a scalar subquery).
+
+```sql
+-- Countries with more than 2 customers (GROUP BY + HAVING)
+SELECT Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(*) > 2;
+```
+- Uses `HAVING` to filter by an aggregate (`COUNT(*)`).
+
+```sql
+-- Same result via a correlated subquery
+SELECT DISTINCT c1.Country
+FROM Customers c1
+WHERE (
+  SELECT COUNT(*)
+  FROM Customers c2
+  WHERE c2.Country = c1.Country
+) > 2;
+```
+- Counts rows in the same Country using a correlated subquery, then filters. Equivalent to the `HAVING` solution above.
+
+```sql
+-- Countries starting with 'A'
+SELECT *
+FROM Customers
+WHERE Country LIKE 'A%';
+```
+- `%` is a multi-character wildcard. Matches any Country beginning with A.
+
+```sql
+-- Countries with exactly 3 characters
+SELECT *
+FROM Customers
+WHERE Country LIKE '___';
+```
+- `_` is a single-character wildcard. Three underscores means length exactly 3.
+
+```sql
+-- Orders with their (matching) customer IDs
+SELECT o.OrderID, c.CustomerID
+FROM Orders AS o
+LEFT JOIN Customers AS c
+  ON o.CustomerID = c.CustomerID;
+```
+- `LEFT JOIN` keeps all orders; customer columns are NULL if no matching customer.
+
+```sql
+-- Customers with no orders (NOT IN)
+SELECT *
+FROM Customers
+WHERE CustomerID NOT IN (SELECT CustomerID FROM Orders);
+```
+- Finds customers absent from Orders. Note: if the subquery returns NULL, `NOT IN` can yield no rows; a safer pattern is `LEFT JOIN ... WHERE o.CustomerID IS NULL` or `NOT EXISTS`.
+
+```sql
+-- Customers who ordered the product named 'Chais' (typical schema)
+SELECT DISTINCT c.CustomerName
+FROM Customers c
+JOIN Orders o       ON o.CustomerID = c.CustomerID
+JOIN OrderDetails d ON d.OrderID    = o.OrderID
+JOIN Products p     ON p.ProductID  = d.ProductID
+WHERE p.ProductName = 'Chais';
+```
+- Joins through Orders and OrderDetails to reach Products by name. `DISTINCT` avoids duplicates when a customer ordered it multiple times.
+
+```sql
+-- Same intent using nested IN (tip: ensure correct join column)
+SELECT DISTINCT CustomerName
+FROM Customers
+WHERE CustomerID IN (
+  SELECT o.CustomerID
+  FROM Orders o
+  WHERE o.OrderID IN (
+    SELECT d.OrderID
+    FROM OrderDetails d
+    WHERE d.ProductID = (
+      SELECT p.ProductID FROM Products p WHERE p.ProductName = 'Chais'
+    )
+  )
+);
+```
+- A nested-`IN` version of the same logic; more verbose than the explicit JOIN approach.
+
+```sql
+-- How many orders each customer made (include zero)
+SELECT c.CustomerID, c.CustomerName, COUNT(o.OrderID) AS OrderCount
+FROM Customers c
+LEFT JOIN Orders o ON o.CustomerID = c.CustomerID
+GROUP BY c.CustomerID, c.CustomerName;
+```
+- `LEFT JOIN` preserves customers with no orders (count = 0). Grouping by `CustomerID` avoids merging people who share a name.
+
+</details>
+
+---
+
 ## Topics (Structured)
 
 Notes below are reorganized from my class notes. Headings are for navigation; bullet points quote or lightly proofread my original wording.
@@ -638,146 +778,9 @@ new Promise(r => r(7)).then(v => console.log('new Promise:', v));               
 
 </details>
 
-<details class="topic">
-<summary>39. SQL Queries (with Explanations)</summary>
-
-Assumptions: typical schema like Customers(CustomerID, CustomerName, Country), Orders(OrderID, CustomerID), OrderDetails(OrderID, ProductID), Products(ProductID, ProductName, Price). Use single quotes for string literals in most SQL dialects.
-
-```sql
--- Count distinct countries (via subquery)
-SELECT COUNT(*)
-FROM (SELECT DISTINCT Country FROM Customers);
-```
-- Counts how many unique Country values exist. Alternative: `SELECT COUNT(DISTINCT Country) FROM Customers;`.
-
-```sql
--- All customers in Canada
-SELECT *
-FROM Customers
-WHERE Country = 'Canada';
-```
-- Filters rows where Country equals Canada.
-
-```sql
--- Customers in a list of countries
-SELECT *
-FROM Customers
-WHERE Country IN ('Canada', 'US', 'UK', 'Germany');
-```
-- Uses `IN (...)` to match any of several values. Each value must be quoted separately.
-
-```sql
--- Customers per country
-SELECT Country, COUNT(*)
-FROM Customers
-GROUP BY Country;
-```
-- Aggregates rows by Country and counts rows in each group.
-
-```sql
--- Products priced above the average price
-SELECT *
-FROM Products
-WHERE Price > (SELECT AVG(Price) FROM Products);
-```
-- Correlates each product against the overall average price (a scalar subquery).
-
-```sql
--- Countries with more than 2 customers (GROUP BY + HAVING)
-SELECT Country
-FROM Customers
-GROUP BY Country
-HAVING COUNT(*) > 2;
-```
-- Uses `HAVING` to filter by an aggregate (`COUNT(*)`).
-
-```sql
--- Same result via a correlated subquery
-SELECT DISTINCT c1.Country
-FROM Customers c1
-WHERE (
-  SELECT COUNT(*)
-  FROM Customers c2
-  WHERE c2.Country = c1.Country
-) > 2;
-```
-- Counts rows in the same Country using a correlated subquery, then filters. Equivalent to the `HAVING` solution above.
-
-```sql
--- Countries starting with 'A'
-SELECT *
-FROM Customers
-WHERE Country LIKE 'A%';
-```
-- `%` is a multi-character wildcard. Matches any Country beginning with A.
-
-```sql
--- Countries with exactly 3 characters
-SELECT *
-FROM Customers
-WHERE Country LIKE '___';
-```
-- `_` is a single-character wildcard. Three underscores means length exactly 3.
-
-```sql
--- Orders with their (matching) customer IDs
-SELECT o.OrderID, c.CustomerID
-FROM Orders AS o
-LEFT JOIN Customers AS c
-  ON o.CustomerID = c.CustomerID;
-```
-- `LEFT JOIN` keeps all orders; customer columns are NULL if no matching customer.
-
-```sql
--- Customers with no orders (NOT IN)
-SELECT *
-FROM Customers
-WHERE CustomerID NOT IN (SELECT CustomerID FROM Orders);
-```
-- Finds customers absent from Orders. Note: if the subquery returns NULL, `NOT IN` can yield no rows; a safer pattern is `LEFT JOIN ... WHERE o.CustomerID IS NULL` or `NOT EXISTS`.
-
-```sql
--- Customers who ordered the product named 'Chais' (typical schema)
-SELECT DISTINCT c.CustomerName
-FROM Customers c
-JOIN Orders o       ON o.CustomerID = c.CustomerID
-JOIN OrderDetails d ON d.OrderID    = o.OrderID
-JOIN Products p     ON p.ProductID  = d.ProductID
-WHERE p.ProductName = 'Chais';
-```
-- Joins through Orders and OrderDetails to reach Products by name. `DISTINCT` avoids duplicates when a customer ordered it multiple times.
-
-```sql
--- Same intent using nested IN (tip: ensure correct join column)
-SELECT DISTINCT CustomerName
-FROM Customers
-WHERE CustomerID IN (
-  SELECT o.CustomerID
-  FROM Orders o
-  WHERE o.OrderID IN (
-    SELECT d.OrderID
-    FROM OrderDetails d
-    WHERE d.ProductID = (
-      SELECT p.ProductID FROM Products p WHERE p.ProductName = 'Chais'
-    )
-  )
-);
-```
-- A nested-`IN` version of the same logic; more verbose than the explicit JOIN approach.
-
-```sql
--- How many orders each customer made (include zero)
-SELECT c.CustomerID, c.CustomerName, COUNT(o.OrderID) AS OrderCount
-FROM Customers c
-LEFT JOIN Orders o ON o.CustomerID = c.CustomerID
-GROUP BY c.CustomerID, c.CustomerName;
-```
-- `LEFT JOIN` preserves customers with no orders (count = 0). Grouping by `CustomerID` avoids merging people who share a name.
-
-</details>
 
 <details class="topic">
-<summary>40. Git: Recover Local Repo</summary>
+<summary>39. Git: Recover Local Repo</summary>
 
 - Situation: local branch is messy or diverged; align to `origin/main` and discard local changes.
 
