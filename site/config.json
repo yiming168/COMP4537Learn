@@ -15,6 +15,7 @@
       "name": "LLM Host & Maintenance",
       "items": [
         { "title": "Mac mini + Qwen7B Deployment", "path": "LLMSetup/macmini_ollama_qwen7b_setup.md" },
+        { "title": "Change Ollama Model (Mac mini)", "path": "LLMSetup/change_model_macmini.md" },
         { "title": "Ollama Mac Setup", "path": "LLMSetup/ollama_mac_setup.md" },
         { "title": "Ollama API Connectivity", "path": "LLMSetup/ollama_connect.md" },
         { "title": "Secrets and Key Management", "path": "LLMSetup/secret_concern.md" },
