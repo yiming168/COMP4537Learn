@@ -1,11 +1,11 @@
 # How to Change the Ollama Model on Mac Mini
 
-This guide explains how to remove an old Ollama model (e.g., Qwen 7B) and replace it with a new one (e.g., Mistral 7B), while keeping your Flask API and Synology reverse proxy setup working.
+This guide explains how to remove an old Ollama model (e.g., Qwen 7B) and replace it with a new one (e.g., Mistral 7B), while keeping my Flask API and Synology reverse proxy setup working.
 
 ---
 
 ## 1. Remove the Old Model
-Open Terminal on your Mac Mini:
+Open Terminal on my Mac Mini:
 
 ```bash
 ollama list  # see installed models
@@ -42,15 +42,15 @@ curl -s http://127.0.0.1:11434/api/generate \
   -H "Content-Type: application/json" \
   -d '{"model":"mistral:7b-instruct","prompt":"Say hi in one sentence."}'
 ```
-You should get a valid JSON response.
+Should get a valid JSON response.
 
 ---
 
 ## 4. Update Flask API (ollama-api)
-The Flask app is in `~/ollama-api/ollama_api.py`. You don't need to modify the code if `/health` reads from an environment variable.
+The Flask app is in `~/ollama-api/ollama_api.py`. I don't need to modify the code if `/health` reads from an environment variable.
 
 ### Option 1: Use Environment Variable (Recommended)
-Set the model name in your environment so `/health` and `/chat` show the correct model:
+Set the model name in my environment so `/health` and `/chat` show the correct model:
 
 #### Edit the LaunchAgent plist
 ```bash
@@ -91,7 +91,7 @@ Check locally:
 ```bash
 curl -s http://127.0.0.1:5050/health
 ```
-You should see:
+I should see:
 ```json
 {"model":"mistral:7b-instruct","ok":true}
 ```
@@ -113,12 +113,12 @@ curl.exe -v -4 "https://gpt.newbio.net/chat" ^
   --data "{\"prompt\":\"hi\"}"
 ```
 
-If you get a `403 Forbidden`, check that the API key matches between your Synology Node proxy and Mac Flask API.
+If I get a `403 Forbidden`, check that the API key matches between my Synology Node proxy and Mac Flask API.
 
 ---
 
 ## 7. Optional — Make `/health` Detect Automatically
-You can make `/health` query Ollama directly:
+I can make `/health` query Ollama directly:
 ```python
 @app.get("/health")
 @limiter.exempt
@@ -137,12 +137,12 @@ def health():
 ## 8. Summary of Files to Touch
 | File | Purpose |
 |------|----------|
-| `~/Library/LaunchAgents/com.yiming.ollama-gunicorn.plist` | Where you set `DEFAULT_MODEL` permanently |
+| `~/Library/LaunchAgents/com.yiming.ollama-gunicorn.plist` | Where I set `DEFAULT_MODEL` permanently |
 | `~/ollama-api/ollama_api.py` | Flask API routes (optional dynamic health check) |
 | Synology `node-proxy/.env` | Points to Mac IP (no need to change when swapping model) |
 
 ---
 
 ✅ **After following these steps:**  
-Your Mac Mini will serve the new model (e.g., Mistral 7B) to both LAN and public users via Synology reverse proxy without needing any reconfiguration on Synology or clients.
+My Mac Mini will serve the new model (e.g., Mistral 7B) to both LAN and public users via Synology reverse proxy without needing any reconfiguration on Synology or clients.
 
