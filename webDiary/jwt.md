@@ -96,3 +96,90 @@ Here is the most common workflow for using JWTs to protect an application or API
 
 This process is stateless. The server doesn't need to store a list of active tokens in its database. It just needs to check the signature, making JWTs very fast and efficient for modern applications.
 
+## Node.js Practice Example
+
+I followed a YouTube tutorial to get a hands-on feel for JWTs in Node.js. The example uses two tiny Express servers: one for issuing tokens (`authServer.js`) and one for serving protected data (`server.js`). Requests are tested with a VS Code REST client file (`request.rest`).
+
+`server.js`
+
+```js
+require('dotenv').config()
+
+const express = require("express")
+const app = express()
+
+const posts = [
+    {
+        username: "Kyle",
+        title:" Post 1"
+    },
+    {
+        username: "Jim",
+        title:" Post 2"
+    }
+]
+
+const jwt = require("jsonwebtoken")
+app.use(express.json())
+
+app.get('/posts', authenticateToken, (req, res) => {
+    res.json(posts.filter(post => post.username === req.user.name))
+})
+
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if(token == null) return res.sendStatus(401)
+    
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err,user) => {
+        if(err) return res.sendStatus(403)
+        req.user =user
+        next()
+    })
+}
+
+app.listen(3000)
+```
+
+`authServer.js`
+
+```js
+require('dotenv').config()
+
+const express = require("express")
+const app = express()
+const jwt = require("jsonwebtoken")
+
+app.use(express.json())
+
+app.post('/login', (req,res) => {
+    // Autenticate user
+
+    const username = req.body.username
+    const user = {name:username}
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+
+    res.json({
+        accessToken: accessToken
+    })
+})
+
+app.listen(4000)
+```
+
+`request.rest`
+
+```
+### Login to get a fresh token
+# @name login
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+  "username": "Jim"
+}
+
+### Use the token from login in Authorization header
+GET http://localhost:3000/posts
+Authorization: Bearer {{login.response.body.accessToken}}
+```
