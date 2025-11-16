@@ -816,6 +816,7 @@ git reset --hard origin/main
 - <Nov. 06, 2025> - Fetched latest main: git fetch origin main --prune
 - <Nov. 06, 2025> - Discarded local changes: git reset --hard origin/main
 - <Nov. 07, 2025> — Added JWT learning content page (no implementation). See: Web Diary → JWT Explained.
+- <Nov. 16, 2025> - Add work flow for changing LLM model on Mac mini.
 
 ---
 
